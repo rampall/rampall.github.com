@@ -1,46 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">  
-  <head>    
-    <title>Ramesh Pallikara
-    </title>         
-    <meta charset="utf-8" />    
-    <meta http-equiv="imagetoolbar" content="no" />          
-    <!-- Meta -->     
-    <meta name="description" content="Ramesh was here - Just another online portfolio" />    
-    <meta name="author" content="Ramesh Pallikara" />    
-    <!-- Mobile Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <!-- iOS Full Screen -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!-- iOS Status Bar Style (default, black, black-translucent) -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <!-- Canonical URL -->
-    <link rel="canonical" href="http://rampall.github.com/mobile.html" />
-    <!-- Icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/iOS-114.jpg" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/iOS-72.jpg" />
-    <link rel="apple-touch-icon-precomposed" href="images/iOS-57.jpg" />
-    <link rel="icon" href="images/iOS-57.jpg" />    
-    <style type="text/css">      @import url(styles/panojs.css);     
-    </style>    
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>         
-<script type="text/javascript" src="panojs/utils.js"></script>          
-<script type="text/javascript" src="panojs/PanoJS.js"></script>     
-<script type="text/javascript" src="panojs/controls.js"></script>     
-<script type="text/javascript" src="panojs/pyramid_imgcnv.js"></script>     
-<script type="text/javascript" src="panojs/control_thumbnail.js"></script>     
-<script type="text/javascript" src="panojs/control_info.js"></script>     
-<script type="text/javascript" src="panojs/control_svg.js"></script>     
-<script type="text/javascript" src="panojs/control_hash.js"></script> 
-    <style type="text/css">body {   font-family: sans-serif;   margin: 0;   padding: 10px;   color: #000000;   background-color: #FFFFFF;   font-size: 0.7em; } 
-    </style>                   
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="imagetoolbar" content="no" />
+    
+    <style type="text/css">
+      @import url(styles/panojs.css);
+    </style>
+
+    <script type="text/javascript" src="extjs/ext-core.js"></script>    
+    
+    <script type="text/javascript" src="panojs/utils.js"></script>    
+    <script type="text/javascript" src="panojs/PanoJS.js"></script>
+    <script type="text/javascript" src="panojs/controls.js"></script>
+    <script type="text/javascript" src="panojs/pyramid_imgcnv.js"></script>
+    <script type="text/javascript" src="panojs/control_thumbnail.js"></script>
+    <script type="text/javascript" src="panojs/control_info.js"></script>
+    <script type="text/javascript" src="panojs/control_svg.js"></script>
+
+<style type="text/css">
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 10px;
+  color: #000000;
+  background-color: #434343;
+  color:#434343;
+  font-size: 0.7em;
+}
+a{text-decoration:none;
+text-transform:uppercase;
+color:#EA4C89;
+}
+
+</style> 
+                
 <script type="text/javascript">
 // <![CDATA[
+
 PanoJS.MAX_OVER_ZOOM = 0;
 PanoJS.MSG_BEYOND_MIN_ZOOM = null;
 PanoJS.MSG_BEYOND_MAX_ZOOM = null;
 PanoJS.CREATE_INFO_CONTROLS = false;
+
 var viewer1 = null;
 function OsdItemInfo(viewer) {
     this.viewer = viewer;
@@ -71,32 +75,37 @@ function createViewer( viewer, dom_id, url, prefix, w, h ) {
     viewer = new PanoJS(dom_id, {
         tileUrlProvider : myProvider,
         tileSize        : myPyramid.tilesize,
-        initialPan      : { 'x' : .5, 'y' : 0 },
-        maxZoom         :myPyramid.getMaxLevel(),
-        initialZoom     :myPyramid.getMaxLevel(),
+        maxZoom         : myPyramid.getMaxLevel(),
         imageWidth      : myPyramid.width,
         imageHeight     : myPyramid.height,
         blankTile       : 'images/blank.gif',
         loadingTile     : 'images/blank.gif'
     });
+
+    Ext.EventManager.addListener( window, 'resize', callback(viewer, viewer.resize) );
     viewer.init();
     if (!viewer.maximized) { viewer.toggleMaximize(); };
-    //viewer.hash_control.restorePossition();
-    //viewer.hash_control.setListeners();
     OsdItemInfo(viewer);
     viewer1 = viewer;
 };
+
+
 function initViewers() {
   createViewer( viewer1, 'viewer1', 'http://db4.design.hs-anhalt.de/uploads/701/mobi/imgcnv', 'tiles_', 632,  56709 );
 }
-window.onload = initViewers;
-// ]]> 
-</script> 
-  </head>
-  <body>  
-    <div style="width: 100%; height: 400px;">        
-      <div id="viewer1" class="viewer" style="width: 100%; height: 100%;" >
-      </div>  
-    </div>
-  </body>
+  
+Ext.onReady(initViewers);
+// ]]>
+</script>
+
+</head>
+<body>
+    
+  <h1>Ramesh Pallikara</h1>
+
+  <div style="width: 100%; height: 100%;"> 
+      <div id="viewer1" class="viewer" style="width: 100%; height: 100%;" ></div>
+  </div>
+    
+</body>
 </html>
