@@ -62,11 +62,12 @@ function createViewer( viewer, dom_id, url, prefix, w, h ) {
         imageWidth      : myPyramid.width,
         imageHeight     : myPyramid.height,
         blankTile       : 'images/blank.gif',
-        loadingTile     : 'images/progress.gif'
+        loadingTile     : 'images/blank.gif'
     });
 
     Ext.EventManager.addListener( window, 'resize', callback(viewer, viewer.resize) );
     viewer.init();
+    if (!viewer.maximized) { viewer.toggleMaximize(); };
 };
 
 
@@ -75,17 +76,13 @@ function initViewers() {
 }
   
 Ext.onReady(initViewers);
-
-
-
-
 // ]]>
 </script>
 
 </head>
 <body>
     
-  <h1>header here</h1>
+  <h1>Ramesh Pallikara</h1>
 
   <div style="width: 100%; height: 400px;"> 
       <div id="viewer1" class="viewer" style="width: 100%; height: 100%;" ></div>
