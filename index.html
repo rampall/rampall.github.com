@@ -75,6 +75,7 @@ function createViewer( viewer, dom_id, url, prefix, w, h ) {
     viewer = new PanoJS(dom_id, {
         tileUrlProvider : myProvider,
         tileSize        : myPyramid.tilesize,
+        initialPan      : { 'x' : .5, 'y' : 0 },
         maxZoom         : myPyramid.getMaxLevel(),
         imageWidth      : myPyramid.width,
         imageHeight     : myPyramid.height,
