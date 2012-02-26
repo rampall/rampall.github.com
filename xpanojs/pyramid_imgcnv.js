@@ -1,6 +1,6 @@
 /*******************************************************************************
-  BisqueISPyramid - creates an image URL pyramid based on Bisque Image Service
-  <http://www.bioimage.ucsb.edu/downloads/Bisque%20Database>
+  ImgcnvPyramid - creates an image URL pyramid based on imgcnv tool
+  <http://www.bioimage.ucsb.edu/downloads/BioImage%20Convert>
   
   GSV 3.0 : PanoJS3
   @author Dmitry Fedorov  <fedorov@ece.ucsb.edu>   
@@ -17,10 +17,10 @@ function formatInt(n, pad) {
 };   
 
 // -----------------------------------------------------
-// BisqueISLevel
+// ImgcnvLevel
 // -----------------------------------------------------
 
-function BisqueISLevel( width, height, tilesize, level ) {
+function ImgcnvLevel( width, height, tilesize, level ) {
     this.width = width;
     this.height = height;
     this.xtiles = Math.ceil( width / tilesize );
@@ -28,15 +28,15 @@ function BisqueISLevel( width, height, tilesize, level ) {
     this.level = level;
 }
 
-BisqueISLevel.prototype.tiles = function() {
+ImgcnvLevel.prototype.tiles = function() {
     return this.xtiles * this.ytiles;
 }
 
 // -----------------------------------------------------
-// BisqueISPyramid
+// ImgcnvPyramid
 // -----------------------------------------------------
 
-function BisqueISPyramid( width, height, tilesize ) {
+function ImgcnvPyramid( width, height, tilesize ) {
     this.width = width;
     this.height = height;
     this.tilesize = tilesize;
@@ -46,8 +46,9 @@ function BisqueISPyramid( width, height, tilesize ) {
     var level_width = width;    
     var level_height = height;   
     var min_size = (tilesize / 2) + 1;
-    while (level_id==0 || level_width > min_size || level_height > min_size ) {      
-        var level = new BisqueISLevel( level_width, level_height, tilesize, level_id );
+    while (level_width > min_size || level_height > min_size ) {      
+    //while (level_width > tilesize | level_height > tilesize ) {
+        var level = new ImgcnvLevel( level_width, level_height, tilesize, level_id );
         this._pyramid.push( level );
         level_width  = Math.floor( level_width / 2 );
         level_height = Math.floor( level_height / 2 );
@@ -59,18 +60,18 @@ function BisqueISPyramid( width, height, tilesize ) {
     this.levels = this._pyramid.length;
 }
 
-BisqueISPyramid.prototype.getMaxLevel = function() {
+ImgcnvPyramid.prototype.getMaxLevel = function() {
     return this.levels - 1;    
 }
 
-BisqueISPyramid.prototype.getLevel = function( level ) {
+ImgcnvPyramid.prototype.getLevel = function( level ) {
     if (level<this._pyramid.length)
         return this._pyramid[ level ];    
     else
         return this._pyramid[ this._pyramid.length-1 ];          
 }
 
-BisqueISPyramid.prototype.tiles_upto_level = function( level ) {
+ImgcnvPyramid.prototype.tiles_upto_level = function( level ) {
     var tiles = 0;
     for (var i = 0; i < level; i++) {
         tiles = tiles + this._pyramid[i].tiles();
@@ -78,18 +79,18 @@ BisqueISPyramid.prototype.tiles_upto_level = function( level ) {
     return tiles;
 }
 
-BisqueISPyramid.prototype.tiles = function() {
+ImgcnvPyramid.prototype.tiles = function() {
     return this.tiles_upto_level( this.levels );
 }
 
-BisqueISPyramid.prototype.tile_index = function( level, x_coordinate, y_coordinate ) {
+ImgcnvPyramid.prototype.tile_index = function( level, x_coordinate, y_coordinate ) {
     return x_coordinate + y_coordinate * this._pyramid[ level ].xtiles + this.tiles_upto_level( level );
 }
 
-BisqueISPyramid.prototype.tile_filename = function( level, x_coordinate, y_coordinate ) {
-    var l = this.getLevel(level).level;
-    var x = x_coordinate;
-    var y = y_coordinate;
-    return 'tile=' + l + ',' + x + ',' + y + ',' + this.tilesize;
+ImgcnvPyramid.prototype.tile_filename = function( level, x_coordinate, y_coordinate ) {
+    var l = formatInt( this.getLevel(level).level , 3);
+    var x = formatInt(x_coordinate, 3);
+    var y = formatInt(y_coordinate, 3);    
+    return "" + l + "_" + x + "_" + y + ".png";//?"+level;    
 }
 

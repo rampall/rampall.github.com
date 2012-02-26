@@ -150,6 +150,11 @@
   text-overflow: ellipsis;  
 }
 
+.viewer .info a {
+  color: #000000;
+  text-shadow: 1px 0px 2px white, 0px 1px 2px white, 1px 0px 2px white;
+}
+
 .viewer .osd {
   position: absolute; 
   z-index: 15; 

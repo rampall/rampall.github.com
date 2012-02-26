@@ -16,7 +16,7 @@ function InfoControl(viewer) {
     this.viewer.addViewerZoomedListener(this);    
 }
 
-PanoJS.INFO_CONTROL_STYLE = "padding: 5px; text-shadow: 1px 1px 1px #000000; font-size: 12px;";
+PanoJS.INFO_CONTROL_STYLE = "padding: 5px; text-shadow: 1px 1px 1px #000000; font-size: 16px;";
 
 if (isClientTouch())
   PanoJS.INFO_CONTROL_STYLE = "padding: 10px; text-shadow: 2px 2px 2px #000000; font-size: 18px;";
