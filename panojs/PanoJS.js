@@ -624,7 +624,9 @@ PanoJS.prototype.notifyViewerZoomed = function() {
     var h = this.surface.clientHeight / scale;  
     
     for (var i = 0; i < this.viewerZoomedListeners.length; i++)
-      this.viewerZoomedListeners[i].viewerZoomed( new PanoJS.ZoomEvent(this.x, this.y, this.zoomLevel, scale, w, h) );
+      if(this.viewerZoomedListeners[i].viewerZoomed){ 
+        this.viewerZoomedListeners[i].viewerZoomed( new PanoJS.ZoomEvent(this.x, this.y, this.zoomLevel, scale, w, h) );
+      }
 };
   
 // dima : Notify listeners of a zoom event on the viewer
