@@ -77,6 +77,7 @@ function createViewer( viewer, dom_id, url, prefix, w, h ) {
         tileSize        : myPyramid.tilesize,
         initialPan      : { 'x' : .5, 'y' : 0 },
         maxZoom         : myPyramid.getMaxLevel(),
+        initialZoom     : myPyramid.getMaxLevel(),
         imageWidth      : myPyramid.width,
         imageHeight     : myPyramid.height,
         blankTile       : 'images/blank.gif',
