@@ -160,8 +160,8 @@ PanoJS.WHEEL_SCALE = (navigator.userAgent.toLowerCase().indexOf('chrome')>-1 ? 1
 
 // dima: keys used by keyboard handlers
 // right now event is attached to 'document', can't make sure which element is current, skip for now
-PanoJS.USE_KEYBOARD = false;
-PanoJS.KEY_MOVE_THROTTLE = 15;
+PanoJS.USE_KEYBOARD = true;
+PanoJS.KEY_MOVE_THROTTLE = 250;
 PanoJS.KEY_UP    = 38;
 PanoJS.KEY_DOWN  = 40;
 PanoJS.KEY_RIGHT = 39;
