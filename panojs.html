@@ -26,8 +26,13 @@ body {
   margin: 0;
   padding: 10px;
   color: #000000;
-  background-color: #FFFFFF;
+  background-color: #434343;
+  color:#434343;
   font-size: 0.7em;
+}
+a{text-decoration:none;
+text-transform:uppercase;
+color:#EA4C89;
 }
 
 </style> 
@@ -35,11 +40,23 @@ body {
 <script type="text/javascript">
 // <![CDATA[
 
+PanoJS.MAX_OVER_ZOOM = 0;
 PanoJS.MSG_BEYOND_MIN_ZOOM = null;
 PanoJS.MSG_BEYOND_MAX_ZOOM = null;
-var viewer1 = null;
-var viewer2 = null;
+PanoJS.CREATE_INFO_CONTROLS = false;
 
+var viewer1 = null;
+function OsdItemInfo(viewer) {
+    this.viewer = viewer;
+    this.dom_element = this.viewer.viewerDomElement();
+    this.dom_info = document.createElement('span');
+    this.dom_info.className = 'info';
+    this.dom_element.appendChild(this.dom_info);
+    this.dom_info.setAttribute("style", PanoJS.INFO_CONTROL_STYLE );
+    this.dom_info.style.cssText = PanoJS.INFO_CONTROL_STYLE;
+    this.viewer.addViewerZoomedListener(this);
+    this.dom_info.innerHTML = '<a href="http://rampall.github.com/">SCREEN</a>&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://rampall.github.com/mobile">MOBILE</a>&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://rameshwashere.tumblr.com/">HTML</a>';
+}
 function createViewer( viewer, dom_id, url, prefix, w, h ) {
     if (viewer) return;
   
@@ -68,6 +85,8 @@ function createViewer( viewer, dom_id, url, prefix, w, h ) {
     Ext.EventManager.addListener( window, 'resize', callback(viewer, viewer.resize) );
     viewer.init();
     if (!viewer.maximized) { viewer.toggleMaximize(); };
+    OsdItemInfo(viewer);
+    viewer1 = viewer;
 };
 
 
@@ -84,7 +103,7 @@ Ext.onReady(initViewers);
     
   <h1>Ramesh Pallikara</h1>
 
-  <div style="width: 100%; height: 400px;"> 
+  <div style="width: 100%; height: 100%;"> 
       <div id="viewer1" class="viewer" style="width: 100%; height: 100%;" ></div>
   </div>
     
