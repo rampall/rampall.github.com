@@ -148,6 +148,7 @@ PanoJS.CREATE_CONTROLS = true;
 PanoJS.CREATE_INFO_CONTROLS = true;
 PanoJS.CREATE_OSD_CONTROLS = true;
 PanoJS.CREATE_THUMBNAIL_CONTROLS = (isClientPhone() ? false : true);
+PanoJS.CREATE_HASH_CONTROL = true;
 
 PanoJS.MAX_OVER_ZOOM = 2;
 PanoJS.PRE_CACHE_AMOUNT = 3; // 1 - only visible, 2 - more, 3 - even more
@@ -160,8 +161,8 @@ PanoJS.WHEEL_SCALE = (navigator.userAgent.toLowerCase().indexOf('chrome')>-1 ? 1
 
 // dima: keys used by keyboard handlers
 // right now event is attached to 'document', can't make sure which element is current, skip for now
-PanoJS.USE_KEYBOARD = true;
-PanoJS.KEY_MOVE_THROTTLE = 250;
+PanoJS.USE_KEYBOARD = false;
+PanoJS.KEY_MOVE_THROTTLE = 15;
 PanoJS.KEY_UP    = 38;
 PanoJS.KEY_DOWN  = 40;
 PanoJS.KEY_RIGHT = 39;
@@ -251,7 +252,11 @@ PanoJS.prototype.init = function() {
   
     if (PanoJS.CREATE_THUMBNAIL_CONTROLS && !this.thumbnail_control) {
       this.thumbnail_control = new ThumbnailControl(this);
-    }     
+    }
+
+    if (PanoJS.CREATE_HASH_CONTROL && !this.hash_control) {
+      this.hash_control = new HashControl(this);
+    }
         
     this.prepareTiles();
     this.initialized = true;
@@ -283,6 +288,7 @@ PanoJS.prototype.init = function() {
     // notify listners
     this.notifyViewerZoomed();    
     this.notifyViewerMoved();  
+
 };
 
 PanoJS.prototype.viewerDomElement = function() {    
@@ -624,9 +630,7 @@ PanoJS.prototype.notifyViewerZoomed = function() {
     var h = this.surface.clientHeight / scale;  
     
     for (var i = 0; i < this.viewerZoomedListeners.length; i++)
-      if(this.viewerZoomedListeners[i].viewerZoomed){ 
-        this.viewerZoomedListeners[i].viewerZoomed( new PanoJS.ZoomEvent(this.x, this.y, this.zoomLevel, scale, w, h) );
-      }
+      this.viewerZoomedListeners[i].viewerZoomed( new PanoJS.ZoomEvent(this.x, this.y, this.zoomLevel, scale, w, h) );
 };
   
 // dima : Notify listeners of a zoom event on the viewer
@@ -989,15 +993,8 @@ PanoJS.prototype.mouseReleasedHandler = function(e) {
   if (moved || motion.x>5 || motion.y>5) return false;
     
   if (e.button == 2) {
-    this.blockPropagation(e);      
-    this.zoom(-1);    
-  } else
-  // move on one click
-  if (e.button < 2) {
-    //if (!this.pointExceedsBoundaries(coords)) {
-         this.resetSlideMotion();
-         this.recenter(coords);
-    //}        
+    this.blockPropagation(e);
+    this.zoom(-1);
   }
     
   return false;    

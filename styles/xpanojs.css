@@ -143,11 +143,16 @@
   text-align: center; 
   left: 0px; 
   padding: 5px; 
-  top: 0px; 
+  bottom: 0px; 
   color: #FFFFFF; 
   text-shadow: 1px 1px 1px #000000; 
   font-size: 12px;
   text-overflow: ellipsis;  
+}
+
+.viewer .info a {
+  color: #000000;
+  text-shadow: 1px 0px 2px white, 0px 1px 2px white, 1px 0px 2px white;
 }
 
 .viewer .osd {
@@ -164,6 +169,4 @@
   font-size: 12px;
   text-overflow: ellipsis;  
 }
-
-.maximize {display:none;}
 
